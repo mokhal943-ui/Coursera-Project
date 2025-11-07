@@ -1,401 +1,361 @@
-// Main menu data array - ALL content is stored in JavaScript
-var menuCategories = [
+// =============================================
+// ASSIGNMENT 4 - RESTAURANT MENU APPLICATION
+// All content dynamically generated with JavaScript
+// =============================================
+
+// Main menu data array - ALL content stored in JavaScript
+const menuCategories = [
     {
-        id: 1,
-        name: "Appetizers",
+        id: 'appetizers',
+        name: 'Appetizers',
         items: [
             {
-                id: 101,
-                name: "Bruschetta",
-                description: "Toasted bread topped with fresh tomatoes, garlic, and basil",
+                id: 1,
+                name: 'Bruschetta',
+                description: 'Toasted bread topped with fresh tomatoes, garlic, and basil',
                 price: 8.99,
-                spicy: false,
-                vegetarian: true
+                tags: ['vegetarian'],
+                popular: true
             },
             {
-                id: 102,
-                name: "Spicy Chicken Wings",
-                description: "Crispy chicken wings with your choice of sauce",
-                price: 10.99,
-                spicy: true,
-                vegetarian: false
+                id: 2,
+                name: 'Spicy Chicken Wings',
+                description: 'Crispy chicken wings with buffalo sauce and blue cheese dip',
+                price: 12.99,
+                tags: ['spicy'],
+                popular: true
             },
             {
-                id: 103,
-                name: "Mozzarella Sticks",
-                description: "Breaded mozzarella served with marinara sauce",
+                id: 3,
+                name: 'Mozzarella Sticks',
+                description: 'Breaded mozzarella served with marinara sauce',
                 price: 7.99,
-                spicy: false,
-                vegetarian: true
-            }
-        ]
-    },
-    {
-        id: 2,
-        name: "Main Courses",
-        items: [
-            {
-                id: 201,
-                name: "Grilled Salmon",
-                description: "Fresh salmon fillet with lemon butter sauce",
-                price: 22.99,
-                spicy: false,
-                vegetarian: false
+                tags: ['vegetarian']
             },
             {
-                id: 202,
-                name: "Spaghetti Carbonara",
-                description: "Classic pasta with bacon, eggs, and parmesan",
-                price: 16.99,
-                spicy: false,
-                vegetarian: false
-            },
-            {
-                id: 203,
-                name: "Vegetable Curry",
-                description: "Spicy vegetable curry with rice",
+                id: 4,
+                name: 'Shrimp Cocktail',
+                description: 'Chilled shrimp with cocktail sauce and lemon',
                 price: 14.99,
-                spicy: true,
-                vegetarian: true
-            },
-            {
-                id: 204,
-                name: "Beef Burger",
-                description: "Angus beef patty with special sauce",
-                price: 15.99,
-                spicy: false,
-                vegetarian: false
+                tags: ['gluten-free']
             }
         ]
     },
     {
-        id: 3,
-        name: "Desserts",
+        id: 'mains',
+        name: 'Main Courses',
         items: [
             {
-                id: 301,
-                name: "Chocolate Lava Cake",
-                description: "Warm chocolate cake with molten center",
+                id: 5,
+                name: 'Grilled Salmon',
+                description: 'Fresh salmon fillet with lemon butter sauce and seasonal vegetables',
+                price: 24.99,
+                tags: ['gluten-free'],
+                popular: true
+            },
+            {
+                id: 6,
+                name: 'Filet Mignon',
+                description: '8oz tender beef filet with red wine reduction and mashed potatoes',
+                price: 32.99,
+                tags: ['gluten-free']
+            },
+            {
+                id: 7,
+                name: 'Vegetable Lasagna',
+                description: 'Layers of pasta with fresh vegetables, ricotta, and tomato sauce',
+                price: 18.99,
+                tags: ['vegetarian']
+            },
+            {
+                id: 8,
+                name: 'Spicy Chicken Curry',
+                description: 'Chicken cooked in aromatic spices with basmati rice',
+                price: 19.99,
+                tags: ['spicy']
+            },
+            {
+                id: 9,
+                name: 'Mushroom Risotto',
+                description: 'Creamy arborio rice with wild mushrooms and parmesan',
+                price: 16.99,
+                tags: ['vegetarian', 'gluten-free']
+            }
+        ]
+    },
+    {
+        id: 'desserts',
+        name: 'Desserts',
+        items: [
+            {
+                id: 10,
+                name: 'Chocolate Lava Cake',
+                description: 'Warm chocolate cake with molten center and vanilla ice cream',
+                price: 9.99,
+                tags: ['vegetarian'],
+                popular: true
+            },
+            {
+                id: 11,
+                name: 'New York Cheesecake',
+                description: 'Creamy cheesecake with graham cracker crust and berry compote',
                 price: 8.99,
-                spicy: false,
-                vegetarian: true
+                tags: ['vegetarian']
             },
             {
-                id: 302,
-                name: "Cheesecake",
-                description: "New York style with berry compote",
-                price: 7.99,
-                spicy: false,
-                vegetarian: true
-            },
-            {
-                id: 303,
-                name: "Ice Cream Sundae",
-                description: "Vanilla ice cream with hot fudge and nuts",
-                price: 6.99,
-                spicy: false,
-                vegetarian: true
+                id: 12,
+                name: 'Tiramisu',
+                description: 'Classic Italian dessert with coffee-soaked ladyfingers',
+                price: 9.99,
+                tags: ['vegetarian']
             }
         ]
     }
 ];
 
-// Global variables
-var currentFilter = 'all';
-var cart = [];
+// Application state
+let currentFilter = 'all';
+let shoppingCart = [];
 
-// Main function to display menu
-function displayMenu() {
-    console.log("Displaying menu with filter:", currentFilter);
+// Initialize the application
+function init() {
+    console.log('🚀 Assignment 4 - Restaurant Menu Application Initialized');
+    console.log('📊 Menu Data:', menuCategories);
     
-    var menuContainer = document.getElementById('menu-items');
-    if (!menuContainer) {
-        console.error("Menu container not found!");
-        return;
-    }
+    createFilterButtons();
+    displayMenu();
+    displayCart();
     
-    // Clear existing content
-    menuContainer.innerHTML = '';
-    
-    // Create filter buttons
-    createFilterButtons(menuContainer);
-    
-    // Loop through each category and create elements dynamically
-    menuCategories.forEach(function(category) {
-        // Create category section using JavaScript
-        var categorySection = document.createElement('div');
-        categorySection.className = 'menu-category';
-        categorySection.id = 'category-' + category.id;
-        
-        // Create category title using JavaScript
-        var categoryTitle = document.createElement('h2');
-        categoryTitle.className = 'category-title';
-        categoryTitle.textContent = category.name;
-        categorySection.appendChild(categoryTitle);
-        
-        // Create items container
-        var itemsContainer = document.createElement('div');
-        itemsContainer.className = 'items-container';
-        
-        // Filter and display items
-        var filteredItems = category.items.filter(function(item) {
-            if (currentFilter === 'all') return true;
-            if (currentFilter === 'spicy') return item.spicy;
-            if (currentFilter === 'vegetarian') return item.vegetarian;
-            return true;
-        });
-        
-        if (filteredItems.length === 0) {
-            var noItemsMsg = document.createElement('p');
-            noItemsMsg.textContent = 'No items match the current filter.';
-            noItemsMsg.className = 'no-items';
-            itemsContainer.appendChild(noItemsMsg);
-        } else {
-            // Create each menu item dynamically
-            filteredItems.forEach(function(item) {
-                var menuItem = createMenuItem(item);
-                itemsContainer.appendChild(menuItem);
-            });
-        }
-        
-        categorySection.appendChild(itemsContainer);
-        menuContainer.appendChild(categorySection);
-    });
-    
-    // Display cart summary
-    displayCartSummary();
+    // Demonstrate JavaScript functionality
+    console.log('💡 Try these in console:');
+    console.log('   - app.filterMenu("vegetarian")');
+    console.log('   - app.addToCart(1)');
+    console.log('   - app.showNotification("Hello from JavaScript!")');
 }
 
-// Function to create a single menu item element
-function createMenuItem(item) {
-    var menuItem = document.createElement('div');
-    menuItem.className = 'menu-item';
-    menuItem.dataset.id = item.id;
+// Create filter buttons dynamically
+function createFilterButtons() {
+    const controlsSection = document.getElementById('controls');
     
-    // Item name with badges
-    var itemName = document.createElement('h3');
-    itemName.className = 'item-name';
-    itemName.textContent = item.name;
-    
-    // Add badges for special items
-    if (item.spicy) {
-        var spicyBadge = document.createElement('span');
-        spicyBadge.className = 'badge spicy-badge';
-        spicyBadge.textContent = '🌶️ Spicy';
-        itemName.appendChild(spicyBadge);
-    }
-    
-    if (item.vegetarian) {
-        var vegBadge = document.createElement('span');
-        vegBadge.className = 'badge veg-badge';
-        vegBadge.textContent = '🥬 Vegetarian';
-        itemName.appendChild(vegBadge);
-    }
-    
-    menuItem.appendChild(itemName);
-    
-    // Item description
-    var itemDescription = document.createElement('p');
-    itemDescription.className = 'item-description';
-    itemDescription.textContent = item.description;
-    menuItem.appendChild(itemDescription);
-    
-    // Item price and add to cart button
-    var priceContainer = document.createElement('div');
-    priceContainer.className = 'price-container';
-    
-    var itemPrice = document.createElement('span');
-    itemPrice.className = 'item-price';
-    itemPrice.textContent = '$' + item.price.toFixed(2);
-    priceContainer.appendChild(itemPrice);
-    
-    var addButton = document.createElement('button');
-    addButton.className = 'add-to-cart';
-    addButton.textContent = 'Add to Cart';
-    addButton.onclick = function() {
-        addToCart(item);
-    };
-    priceContainer.appendChild(addButton);
-    
-    menuItem.appendChild(priceContainer);
-    
-    return menuItem;
-}
-
-// Function to create filter buttons
-function createFilterButtons(container) {
-    var filterContainer = document.createElement('div');
-    filterContainer.className = 'filter-buttons';
-    
-    var filters = [
+    const filters = [
         { id: 'all', text: 'All Items' },
+        { id: 'vegetarian', text: '🥬 Vegetarian' },
         { id: 'spicy', text: '🌶️ Spicy' },
-        { id: 'vegetarian', text: '🥬 Vegetarian' }
+        { id: 'gluten-free', text: '🌾 Gluten Free' }
     ];
     
-    filters.forEach(function(filter) {
-        var button = document.createElement('button');
-        button.className = 'filter-btn' + (currentFilter === filter.id ? ' active' : '');
+    filters.forEach(filter => {
+        const button = document.createElement('button');
+        button.className = `filter-btn ${filter.id === currentFilter ? 'active' : ''}`;
         button.textContent = filter.text;
-        button.onclick = function() {
-            setFilter(filter.id);
-        };
-        filterContainer.appendChild(button);
+        button.onclick = () => filterMenu(filter.id);
+        controlsSection.appendChild(button);
     });
-    
-    container.appendChild(filterContainer);
 }
 
-// Function to set filter and refresh display
-function setFilter(filter) {
-    currentFilter = filter;
+// Filter menu items
+function filterMenu(filterType) {
+    currentFilter = filterType;
+    
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
     displayMenu();
 }
 
-// Cart functionality
-function addToCart(item) {
-    var existingItem = cart.find(function(cartItem) {
-        return cartItem.id === item.id;
+// Display the entire menu dynamically
+function displayMenu() {
+    const menuContainer = document.getElementById('menu-container');
+    menuContainer.innerHTML = '<h2 style="text-align: center; color: white; margin: 20px 0;">Loading Menu...</h2>';
+    
+    // Simulate loading (demonstrates async capability)
+    setTimeout(() => {
+        menuContainer.innerHTML = '';
+        
+        menuCategories.forEach(category => {
+            const filteredItems = category.items.filter(item => {
+                if (currentFilter === 'all') return true;
+                return item.tags.includes(currentFilter);
+            });
+            
+            if (filteredItems.length > 0) {
+                const categoryElement = createCategoryElement(category, filteredItems);
+                menuContainer.appendChild(categoryElement);
+            }
+        });
+        
+        if (menuContainer.children.length === 0) {
+            menuContainer.innerHTML = '<div class="menu-category"><h2 class="category-title">No items found</h2><p style="text-align: center; color: #7f8c8d;">Try a different filter.</p></div>';
+        }
+    }, 500);
+}
+
+// Create a category element
+function createCategoryElement(category, items) {
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'menu-category';
+    
+    const title = document.createElement('h2');
+    title.className = 'category-title';
+    title.textContent = category.name;
+    categoryDiv.appendChild(title);
+    
+    items.forEach(item => {
+        const itemElement = createMenuItemElement(item);
+        categoryDiv.appendChild(itemElement);
     });
+    
+    return categoryDiv;
+}
+
+// Create a single menu item element
+function createMenuItemElement(item) {
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'menu-item';
+    itemDiv.dataset.itemId = item.id;
+    
+    const itemInfo = document.createElement('div');
+    itemInfo.className = 'item-info';
+    
+    // Item name with badges
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'item-name';
+    nameDiv.textContent = item.name;
+    
+    if (item.popular) {
+        const popularBadge = document.createElement('span');
+        popularBadge.className = 'badge';
+        popularBadge.textContent = '🔥 Popular';
+        popularBadge.style.background = '#f39c12';
+        nameDiv.appendChild(popularBadge);
+    }
+    
+    item.tags.forEach(tag => {
+        const badge = document.createElement('span');
+        badge.className = `badge ${tag}`;
+        badge.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
+        nameDiv.appendChild(badge);
+    });
+    
+    itemInfo.appendChild(nameDiv);
+    
+    // Item description
+    const description = document.createElement('p');
+    description.className = 'item-description';
+    description.textContent = item.description;
+    itemInfo.appendChild(description);
+    
+    // Item details
+    const details = document.createElement('p');
+    details.className = 'item-details';
+    details.textContent = `Item ID: ${item.id} | Category: ${findCategoryByItemId(item.id)}`;
+    itemInfo.appendChild(details);
+    
+    itemDiv.appendChild(itemInfo);
+    
+    // Price and add to cart button
+    const price = document.createElement('div');
+    price.className = 'item-price';
+    price.textContent = `$${item.price.toFixed(2)}`;
+    itemDiv.appendChild(price);
+    
+    const addButton = document.createElement('button');
+    addButton.className = 'add-to-cart';
+    addButton.textContent = 'Add to Cart';
+    addButton.onclick = () => addToCart(item);
+    itemDiv.appendChild(addButton);
+    
+    return itemDiv;
+}
+
+// Shopping cart functionality
+function addToCart(item) {
+    const existingItem = shoppingCart.find(cartItem => cartItem.id === item.id);
     
     if (existingItem) {
         existingItem.quantity++;
     } else {
-        cart.push({
-            id: item.id,
-            name: item.name,
-            price: item.price,
+        shoppingCart.push({
+            ...item,
             quantity: 1
         });
     }
     
-    displayCartSummary();
-    showNotification(item.name + ' added to cart!');
+    displayCart();
+    showNotification(`✅ ${item.name} added to cart!`);
+    
+    console.log('🛒 Cart updated:', shoppingCart);
 }
 
-function displayCartSummary() {
-    var cartContainer = document.getElementById('cart-summary');
-    if (!cartContainer) {
-        // Create cart container if it doesn't exist
-        cartContainer = document.createElement('div');
-        cartContainer.id = 'cart-summary';
-        cartContainer.className = 'cart-summary';
-        document.body.insertBefore(cartContainer, document.getElementById('menu-items'));
-    }
+function displayCart() {
+    const cartSection = document.getElementById('cart-section');
     
-    var totalItems = cart.reduce(function(total, item) {
-        return total + item.quantity;
-    }, 0);
+    const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-    var totalPrice = cart.reduce(function(total, item) {
-        return total + (item.price * item.quantity);
-    }, 0);
-    
-    cartContainer.innerHTML = `
-        <h3>🛒 Cart Summary</h3>
-        <p>Items: ${totalItems} | Total: $${totalPrice.toFixed(2)}</p>
-        ${totalItems > 0 ? '<button class="clear-cart" onclick="clearCart()">Clear Cart</button>' : ''}
+    cartSection.innerHTML = `
+        <div class="cart-summary">
+            <h2>🛒 Shopping Cart</h2>
+            <p>Items in cart: <strong>${totalItems}</strong></p>
+            <p class="cart-total">Total: $${totalPrice.toFixed(2)}</p>
+            ${totalItems > 0 ? '<button class="clear-cart" onclick="clearCart()">Clear Cart</button>' : '<p class="empty-cart">Your cart is empty</p>'}
+        </div>
     `;
 }
 
 function clearCart() {
-    cart = [];
-    displayCartSummary();
-    showNotification('Cart cleared!');
+    shoppingCart = [];
+    displayCart();
+    showNotification('🗑️ Cart cleared!');
+}
+
+// Utility functions
+function findCategoryByItemId(itemId) {
+    for (const category of menuCategories) {
+        const item = category.items.find(item => item.id === itemId);
+        if (item) return category.name;
+    }
+    return 'Unknown';
 }
 
 function showNotification(message) {
     // Remove existing notification
-    var existingNotification = document.querySelector('.notification');
+    const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
         existingNotification.remove();
     }
     
-    var notification = document.createElement('div');
+    const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
     
     document.body.appendChild(notification);
     
-    // Remove notification after 2 seconds
-    setTimeout(function() {
+    setTimeout(() => {
         if (notification.parentNode) {
             notification.parentNode.removeChild(notification);
         }
-    }, 2000);
+    }, 3000);
 }
 
-// Utility functions
-function getMenuItemById(id) {
-    for (var i = 0; i < menuCategories.length; i++) {
-        var category = menuCategories[i];
-        var item = category.items.find(function(menuItem) {
-            return menuItem.id === id;
-        });
-        if (item) return item;
-    }
-    return null;
-}
-
-function getItemsByCategory(categoryName) {
-    var category = menuCategories.find(function(cat) {
-        return cat.name === categoryName;
-    });
-    return category ? category.items : [];
-}
-
-// Initialize application
-function init() {
-    console.log('Initializing Restaurant Menu Application');
-    console.log('Menu data:', menuCategories);
-    
-    // Wait a bit for DOM to be ready
-    setTimeout(function() {
-        displayMenu();
-        
-        // Add some demo functionality
-        console.log('Application ready! Try these in console:');
-        console.log('- restaurantMenu.setFilter("spicy")');
-        console.log('- restaurantMenu.addNewItem("Main Courses", "Test Item", "Description", 9.99)');
-    }, 100);
-}
-
-// Make functions available globally for testing
-window.restaurantMenu = {
-    displayMenu: displayMenu,
-    setFilter: setFilter,
-    addToCart: addToCart,
-    clearCart: clearCart,
-    getMenuItemById: getMenuItemById,
-    getItemsByCategory: getItemsByCategory,
-    menuData: menuCategories,
-    cart: cart
+// Public API for demonstration
+window.app = {
+    filterMenu,
+    addToCart,
+    clearCart,
+    showNotification,
+    getMenuData: () => menuCategories,
+    getCart: () => shoppingCart
 };
 
-// Add new item function for demonstration
-window.restaurantMenu.addNewItem = function(categoryName, itemName, description, price) {
-    var category = menuCategories.find(function(cat) {
-        return cat.name === categoryName;
-    });
-    
-    if (category) {
-        var newItem = {
-            id: Date.now(), // Simple ID generation
-            name: itemName,
-            description: description,
-            price: price,
-            spicy: false,
-            vegetarian: false
-        };
-        category.items.push(newItem);
-        displayMenu();
-        console.log('New item added:', newItem);
-    }
-};
-
-// Start the application when DOM is loaded
+// Start the application when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
     init();
 }
+
+console.log('📝 Assignment 4 JavaScript loaded successfully!');
