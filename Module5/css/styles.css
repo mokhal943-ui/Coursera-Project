@@ -1,1 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
 
+.navbar {
+    background-color: #f8f8f8;
+    border-radius: 0;
+    margin-bottom: 0;
+    border: 1px solid #e7e7e7;
+}
+
+.navbar-brand h1 {
+    color: #000;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#main-content {
+    margin-top: 30px;
+}
+
+.category-tile {
+    background: white;
+    padding: 30px;
+    margin: 15px 0;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #3F0C1F;
+    transition: all 0.3s ease;
+}
+
+.category-tile:hover {
+    background: #3F0C1F;
+    color: white;
+    transform: scale(1.05);
+}
+
+.menu-item {
+    background: white;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    border-left: 4px solid #3F0C1F;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.menu-item h3 {
+    color: #3F0C1F;
+    margin-bottom: 10px;
+}
+
+.item-description {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.item-price {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.map-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.btn-primary {
+    background-color: #3F0C1F;
+    border-color: #3F0C1F;
+}
+
+.btn-primary:hover {
+    background-color: #2a0815;
+    border-color: #2a0815;
+}
