@@ -1,0 +1,44 @@
+/* 1. Style body for font family and size */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+/* 2. Style header background color */
+header {
+    background-color: #e6f2ff;
+}
+
+/* 3. Style nav background color */
+nav {
+    background-color: #333;
+}
+
+/* 4. Style main background color and font size */
+main {
+    background-color: #f9f9f9;
+    font-size: 1.1em;
+}
+
+/* 5. Style footer background color */
+footer {
+    background-color: #e6f2ff;
+}
+
+/* 6. Style li for display and width */
+li {
+    display: inline-block;
+    width: 150px;
+}
+
+/* 7. Style h1 for text alignment, font family, and color */
+h1 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #2c3e50;
+}
+
+/* 8. Style p for line height */
+p {
+    line-height: 1.6;
+}
