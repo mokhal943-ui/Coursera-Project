@@ -20,12 +20,6 @@ footer {
     background-color: #e6f2ff;
 }
 
-/* Style li for display and width */
-li {
-    display: inline-block;
-    width: 150px;
-}
-
 /* Style h1 for text alignment, font family, and color */
 h1 {
     text-align: center;
